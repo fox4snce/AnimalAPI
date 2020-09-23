@@ -1,4 +1,5 @@
 ﻿using AnimalAPI.Models;
+using AnimalAPI.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,14 @@ namespace AnimalAPI.Services.CharacterService
 {
     public interface ICharacterService
     {
-        Task<ServiceResponse<List<Character>>> GetAllCharacters();
+        Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters();
 
-        Task<ServiceResponse<Character>> GetCharacterById(int id);
+        Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id);
 
-        Task<ServiceResponse<List<Character>>> AddCharacter(Character newCharacter);
+        Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter);
+
+        Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdatedCharacterDto updatedCharacter);
+
+        Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AnimalAPI.Models;
+using AnimalAPI.Models.Dtos;
 using AnimalAPI.Services.CharacterService;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -43,9 +44,37 @@ namespace AnimalAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCharacter(Character newCharacter)
+        public async Task<IActionResult> AddCharacter(AddCharacterDto newCharacter)
         {
             return Ok(await _characterService.AddCharacter(newCharacter));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCharacter(UpdatedCharacterDto updatedCharacter)
+        {
+            ServiceResponse<GetCharacterDto> response = await _characterService.UpdateCharacter(updatedCharacter);
+            if(response.Data == null)
+            {
+                return NotFound(response);
+            } else
+            {
+                return Ok(response);
+            }
+            
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            ServiceResponse<List<GetCharacterDto>> response = await _characterService.DeleteCharacter(id);
+            if (response.Data == null)
+            {
+                return NotFound(response);
+            }
+            else
+            {
+                return Ok(response);
+            }
         }
     }
 }
