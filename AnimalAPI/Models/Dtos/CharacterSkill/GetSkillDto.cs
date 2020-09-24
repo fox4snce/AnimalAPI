@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AnimalAPI.Models
+namespace AnimalAPI.Models.Dtos.CharacterSkill
 {
-    public class Skill
+    public class GetSkillDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int Damage { get; set; }
 
-        public List<CharacterSkill> CharacterSkills { get; set; }
     }
 }

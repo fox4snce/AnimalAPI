@@ -1,5 +1,6 @@
 ﻿using AnimalAPI.Models;
 using AnimalAPI.Models.Dtos;
+using AnimalAPI.Models.Dtos.CharacterSkill;
 using AnimalAPI.Models.Dtos.Weapon;
 using AutoMapper;
 using System;
@@ -13,9 +14,11 @@ namespace AnimalAPI
     {
         public AutoMapperProfile()
         {
-            CreateMap<Character, GetCharacterDto>();
+            CreateMap<Character, GetCharacterDto>()
+                .ForMember(dto => dto.Skills, c => c.MapFrom(c => c.CharacterSkills.Select(cs => cs.Skill)));
             CreateMap<AddCharacterDto, Character>();
             CreateMap<Weapon, GetWeaponDto>();
+            CreateMap<Skill, GetSkillDto>();
         }
     }
 }

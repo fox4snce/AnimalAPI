@@ -1,4 +1,5 @@
-﻿using AnimalAPI.Models.Dtos.Weapon;
+﻿using AnimalAPI.Models.Dtos.CharacterSkill;
+using AnimalAPI.Models.Dtos.Weapon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,10 @@ namespace AnimalAPI.Models.Dtos
         public int Intelligence { get; set; } = 10;
         public RpgClass Class { get; set; } = RpgClass.Fighter;
         public GetWeaponDto Weapon { get; set; }
+        public List<GetSkillDto> Skills { get; set; }
+
+        public int Fights { get; set; }
+        public int Victories { get; set; }
+        public int Defeats { get; set; }
     }
 }

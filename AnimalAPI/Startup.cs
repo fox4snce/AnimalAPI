@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using AnimalAPI.Services.WeaponService;
+using AnimalAPI.Services.CharacterSkillService;
+using AnimalAPI.Services.FightService;
 
 namespace AnimalAPI
 {
@@ -40,6 +42,9 @@ namespace AnimalAPI
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IWeaponService, WeaponService>();
+            services.AddScoped<ICharacterSkillService, CharacterSkillService>();
+            services.AddScoped<IFightService, FightService>();
+
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
