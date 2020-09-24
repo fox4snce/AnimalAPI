@@ -1,5 +1,6 @@
 ﻿using AnimalAPI.Models;
 using AnimalAPI.Models.Dtos;
+using AnimalAPI.Models.Dtos.Weapon;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace AnimalAPI
         {
             CreateMap<Character, GetCharacterDto>();
             CreateMap<AddCharacterDto, Character>();
+            CreateMap<Weapon, GetWeaponDto>();
         }
     }
 }
