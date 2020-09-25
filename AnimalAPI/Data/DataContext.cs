@@ -29,6 +29,8 @@ namespace AnimalAPI.Data
         {
             modelBuilder.Entity<CharacterSkill>()
                 .HasKey(cs => new { cs.CharacterId, cs.SkillId });
+
+            
         }
     }
 }
