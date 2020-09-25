@@ -1,5 +1,6 @@
 ﻿using AnimalAPI.Models;
 using AnimalAPI.Models.Dtos;
+using AnimalAPI.Models.Dtos.Character;
 using System;
 using System.Collections.Generic;
 using System.Linq;

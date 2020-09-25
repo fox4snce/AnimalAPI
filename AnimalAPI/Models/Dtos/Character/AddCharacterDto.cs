@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AnimalAPI.Models.Dtos
+namespace AnimalAPI.Models.Dtos.Character
 {
     public class AddCharacterDto
     {

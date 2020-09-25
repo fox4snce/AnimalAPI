@@ -1,5 +1,6 @@
 ﻿using AnimalAPI.Models;
 using AnimalAPI.Models.Dtos;
+using AnimalAPI.Models.Dtos.Character;
 using AnimalAPI.Services.CharacterService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

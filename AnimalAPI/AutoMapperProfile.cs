@@ -1,5 +1,5 @@
 ﻿using AnimalAPI.Models;
-using AnimalAPI.Models.Dtos;
+using AnimalAPI.Models.Dtos.Character;
 using AnimalAPI.Models.Dtos.CharacterSkill;
 using AnimalAPI.Models.Dtos.Fight;
 using AnimalAPI.Models.Dtos.Weapon;

@@ -1,6 +1,6 @@
 ﻿using AnimalAPI.Data;
 using AnimalAPI.Models;
-using AnimalAPI.Models.Dtos;
+using AnimalAPI.Models.Dtos.Character;
 using AnimalAPI.Models.Dtos.Weapon;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;

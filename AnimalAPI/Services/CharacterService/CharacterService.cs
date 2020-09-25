@@ -1,6 +1,7 @@
 ﻿using AnimalAPI.Data;
 using AnimalAPI.Models;
 using AnimalAPI.Models.Dtos;
+using AnimalAPI.Models.Dtos.Character;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
