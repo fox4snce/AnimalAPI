@@ -1,6 +1,7 @@
 ﻿using AnimalAPI.Models;
 using AnimalAPI.Models.Dtos;
 using AnimalAPI.Models.Dtos.CharacterSkill;
+using AnimalAPI.Models.Dtos.Fight;
 using AnimalAPI.Models.Dtos.Weapon;
 using AutoMapper;
 using System;
@@ -19,6 +20,7 @@ namespace AnimalAPI
             CreateMap<AddCharacterDto, Character>();
             CreateMap<Weapon, GetWeaponDto>();
             CreateMap<Skill, GetSkillDto>();
+            CreateMap<Character, HighScoreDto>();
         }
     }
 }
