@@ -36,7 +36,7 @@ namespace AnimalAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _breedingRecordService.GetAll());
+            return Ok(await _breedingRecordService.GetAllBreedingRecords());
         }
 
         [HttpGet("{id}")]
@@ -59,6 +59,20 @@ namespace AnimalAPI.Controllers
                 return Ok(response);
             }
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            ServiceResponse<List<GetBreedingRecordDto>> response = await _breedingRecordService.DeleteBreedingRecord(id);
+            if (response.Data == null)
+            {
+                return NotFound(response);
+            }
+            else
+            {
+                return Ok(response);
+            }
         }
 
 

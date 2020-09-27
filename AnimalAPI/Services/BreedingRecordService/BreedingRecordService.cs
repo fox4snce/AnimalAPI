@@ -44,7 +44,7 @@ namespace AnimalAPI.Services.BreedingRecordService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetBreedingRecordDto>>> GetAll()
+        public async Task<ServiceResponse<List<GetBreedingRecordDto>>> GetAllBreedingRecords()
         {
             ServiceResponse<List<GetBreedingRecordDto>> serviceResponse = new ServiceResponse<List<GetBreedingRecordDto>>();
             serviceResponse.Data = await GetAllRecords();
@@ -110,6 +110,35 @@ namespace AnimalAPI.Services.BreedingRecordService
                 {
                     serviceResponse.Success = false;
                     serviceResponse.Message = "Record not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<GetBreedingRecordDto>>> DeleteBreedingRecord(int id)
+        {
+            ServiceResponse<List<GetBreedingRecordDto>> serviceResponse = new ServiceResponse<List<GetBreedingRecordDto>>();
+
+            try
+            {
+                BreedingRecord breedingRecord = await _context.BreedingRecords.FirstAsync(c => c.Id == id && c.User.Id == GetUserId());
+
+                if (breedingRecord != null)
+                {
+                    _context.BreedingRecords.Remove(breedingRecord);
+                    await _context.SaveChangesAsync();
+                    serviceResponse.Data = _context.BreedingRecords.Where(c => c.User.Id == GetUserId()).Select(c => _mapper.Map<GetBreedingRecordDto>(c)).ToList();
+                }
+                else
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "BreedingRecord not found.";
                 }
             }
             catch (Exception ex)

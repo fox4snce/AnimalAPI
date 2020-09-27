@@ -13,13 +13,14 @@ namespace AnimalAPI.Services.BreedingRecordService
         Task<ServiceResponse<List<GetBreedingRecordDto>>> CreateBreedingRecord(CreateBreedingRecordDto newBreedingRecord);
 
         // Read
-        Task<ServiceResponse<List<GetBreedingRecordDto>>> GetAll();
+        Task<ServiceResponse<List<GetBreedingRecordDto>>> GetAllBreedingRecords();
 
         Task<ServiceResponse<GetBreedingRecordDto>> GetBreedingRecordById(int id);
 
         // Update
         Task<ServiceResponse<GetBreedingRecordDto>> UpdateBreedingRecord(UpdatedBreedingRecordDto updatedBreedingRecord);
 
-        //Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id);
+        // Delete
+        Task<ServiceResponse<List<GetBreedingRecordDto>>> DeleteBreedingRecord(int id);
     }
 }
