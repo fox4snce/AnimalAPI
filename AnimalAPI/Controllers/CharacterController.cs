@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace AnimalAPI.Controllers
 {
-    [Authorize(Roles = "Player,Admin")]
+    [Authorize(Roles = "User,Admin")]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController : ControllerBase

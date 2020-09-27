@@ -52,7 +52,10 @@ namespace AnimalAPI.Services.CharacterService
             string UserRole = GetUserRole();
 
             List<Character> dbCharacters = UserRole.Equals("Admin") ?
-                await _context.Characters.ToListAsync() : 
+                await _context.Characters
+                .Include(c => c.Weapon)
+                .Include(c => c.CharacterSkills).ThenInclude(cs => cs.Skill)
+                .ToListAsync() : 
                 await _context.Characters
                 .Include(c => c.Weapon)
                 .Include(c => c.CharacterSkills).ThenInclude(cs => cs.Skill)

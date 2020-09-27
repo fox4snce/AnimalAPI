@@ -3,14 +3,16 @@ using System;
 using AnimalAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnimalAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200927043959_BirthLitterIdAdditionToCreateBreeding")]
+    partial class BirthLitterIdAdditionToCreateBreeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,6 @@ namespace AnimalAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("BirthLitterId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime(6)");
 
@@ -62,6 +61,9 @@ namespace AnimalAPI.Migrations
 
                     b.Property<DateTime>("DateOfAcquisition")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("LitterId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -86,8 +88,6 @@ namespace AnimalAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BirthLitterId");
-
                     b.HasIndex("BreedId");
 
                     b.HasIndex("BreederId");
@@ -95,6 +95,8 @@ namespace AnimalAPI.Migrations
                     b.HasIndex("CoatTypeId");
 
                     b.HasIndex("ColorId");
+
+                    b.HasIndex("LitterId");
 
                     b.HasIndex("OwnerId");
 
@@ -503,12 +505,6 @@ namespace AnimalAPI.Migrations
 
             modelBuilder.Entity("AnimalAPI.Models.Breeding.BreedingRecord", b =>
                 {
-                    b.HasOne("AnimalAPI.Models.Breeding.Litter", "BirthLitter")
-                        .WithMany()
-                        .HasForeignKey("BirthLitterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AnimalAPI.Models.Breeding.Breed", "Breed")
                         .WithMany()
                         .HasForeignKey("BreedId");
@@ -524,6 +520,10 @@ namespace AnimalAPI.Migrations
                     b.HasOne("AnimalAPI.Models.Breeding.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId");
+
+                    b.HasOne("AnimalAPI.Models.Breeding.Litter", "Litter")
+                        .WithMany()
+                        .HasForeignKey("LitterId");
 
                     b.HasOne("AnimalAPI.Models.Breeding.Contact", "Owner")
                         .WithMany()

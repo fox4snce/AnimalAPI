@@ -3,14 +3,16 @@ using System;
 using AnimalAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnimalAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200927044407_BirthLitterAddedToDtos")]
+    partial class BirthLitterAddedToDtos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +44,7 @@ namespace AnimalAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("BirthLitterId")
+                    b.Property<int?>("BirthLitterId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Birthday")
@@ -505,9 +507,7 @@ namespace AnimalAPI.Migrations
                 {
                     b.HasOne("AnimalAPI.Models.Breeding.Litter", "BirthLitter")
                         .WithMany()
-                        .HasForeignKey("BirthLitterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BirthLitterId");
 
                     b.HasOne("AnimalAPI.Models.Breeding.Breed", "Breed")
                         .WithMany()
