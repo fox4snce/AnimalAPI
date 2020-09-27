@@ -27,6 +27,8 @@ namespace AnimalAPI
 
             CreateMap<BreedingRecord, GetBreedingRecordDto>();
             CreateMap<CreateBreedingRecordDto, BreedingRecord>();
+            CreateMap<UpdatedBreedingRecordDto, BreedingRecord>();
+
             //.ForMember(dto => dto.Litter, br => br.MapFrom(br => br.BreedingRecordLitters.Select(brl => brl.LitterId)));
 
             CreateMap<Litter, GetLitterDto>();

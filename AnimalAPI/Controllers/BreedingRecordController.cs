@@ -45,6 +45,22 @@ namespace AnimalAPI.Controllers
             return Ok(await _breedingRecordService.GetBreedingRecordById(id));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateBreedingRecord(UpdatedBreedingRecordDto updatedBreedingRecord)
+        {
+            ServiceResponse<GetBreedingRecordDto> response = await _breedingRecordService.UpdateBreedingRecord(updatedBreedingRecord);
+
+            if (response.Data == null)
+            {
+                return NotFound(response);
+            }
+            else
+            {
+                return Ok(response);
+            }
+
+        }
+
 
     }
 }

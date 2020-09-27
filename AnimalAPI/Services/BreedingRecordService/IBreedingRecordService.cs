@@ -9,14 +9,16 @@ namespace AnimalAPI.Services.BreedingRecordService
 {
     public interface IBreedingRecordService
     {
+        // Create
+        Task<ServiceResponse<List<GetBreedingRecordDto>>> CreateBreedingRecord(CreateBreedingRecordDto newBreedingRecord);
+
+        // Read
         Task<ServiceResponse<List<GetBreedingRecordDto>>> GetAll();
 
         Task<ServiceResponse<GetBreedingRecordDto>> GetBreedingRecordById(int id);
 
-        //Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter);
-        Task<ServiceResponse<List<GetBreedingRecordDto>>> CreateBreedingRecord(CreateBreedingRecordDto newBreedingRecord);
-
-        //Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdatedCharacterDto updatedCharacter);
+        // Update
+        Task<ServiceResponse<GetBreedingRecordDto>> UpdateBreedingRecord(UpdatedBreedingRecordDto updatedBreedingRecord);
 
         //Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id);
     }

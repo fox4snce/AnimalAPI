@@ -2,6 +2,7 @@
 using AnimalAPI.Models;
 using AnimalAPI.Models.Breeding;
 using AnimalAPI.Models.Dtos.BreedingRecords;
+using AnimalAPI.Utility;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -80,6 +81,43 @@ namespace AnimalAPI.Services.BreedingRecordService
                 .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
 
             serviceResponse.Data = _mapper.Map<GetBreedingRecordDto>(record);
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<GetBreedingRecordDto>> UpdateBreedingRecord(UpdatedBreedingRecordDto updatedBreedingRecord)
+        {
+            ServiceResponse<GetBreedingRecordDto> serviceResponse = new ServiceResponse<GetBreedingRecordDto>();
+
+            try
+            {
+                BreedingRecord breedingRecord = await _context.BreedingRecords.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedBreedingRecord.Id);
+
+                BreedingRecord mappedUpdatedBR = _mapper.Map<BreedingRecord>(updatedBreedingRecord);
+
+                if (breedingRecord.User.Id == GetUserId())
+                {
+                    breedingRecord = Utility.Util.CloneJson<BreedingRecord>(mappedUpdatedBR);
+
+                    
+                    _context.BreedingRecords.Update(breedingRecord);
+                    
+                    await _context.SaveChangesAsync();
+                   
+
+                    serviceResponse.Data = _mapper.Map<GetBreedingRecordDto>(breedingRecord);
+                }
+                else
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Record not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
             return serviceResponse;
         }
     }
