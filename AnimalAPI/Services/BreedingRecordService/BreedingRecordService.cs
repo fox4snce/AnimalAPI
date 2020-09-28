@@ -92,11 +92,11 @@ namespace AnimalAPI.Services.BreedingRecordService
             {
                 BreedingRecord breedingRecord = await _context.BreedingRecords.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedBreedingRecord.Id);
 
-                BreedingRecord mappedUpdatedBR = _mapper.Map<BreedingRecord>(updatedBreedingRecord);
+                BreedingRecord mappedUpdated = _mapper.Map<BreedingRecord>(updatedBreedingRecord);
 
                 if (breedingRecord.User.Id == GetUserId())
                 {
-                    breedingRecord = Utility.Util.CloneJson<BreedingRecord>(mappedUpdatedBR);
+                    breedingRecord = Utility.Util.CloneJson<BreedingRecord>(mappedUpdated);
 
                     
                     _context.BreedingRecords.Update(breedingRecord);

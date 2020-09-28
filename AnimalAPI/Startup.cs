@@ -22,6 +22,7 @@ using AnimalAPI.Services.WeaponService;
 using AnimalAPI.Services.CharacterSkillService;
 using AnimalAPI.Services.FightService;
 using AnimalAPI.Services.BreedingRecordService;
+using AnimalAPI.Services.ContactService;
 
 namespace AnimalAPI
 {
@@ -48,6 +49,7 @@ namespace AnimalAPI
             services.AddScoped<ICharacterSkillService, CharacterSkillService>();
             services.AddScoped<IFightService, FightService>();
             services.AddScoped<IBreedingRecordService, BreedingRecordService>();
+            services.AddScoped<IContactService, ContactService>();
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
