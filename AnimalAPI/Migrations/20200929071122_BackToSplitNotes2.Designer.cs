@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200925222008_MotherFatherId")]
-    partial class MotherFatherId
+    [Migration("20200929071122_BackToSplitNotes2")]
+    partial class BackToSplitNotes2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace AnimalAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("BelongsToLitterId")
+                    b.Property<int>("BirthLitterId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Birthday")
@@ -64,18 +64,6 @@ namespace AnimalAPI.Migrations
 
                     b.Property<DateTime>("DateOfAcquisition")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("FatherId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FatherIdId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MotherId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MotherIdId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -100,7 +88,7 @@ namespace AnimalAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BelongsToLitterId");
+                    b.HasIndex("BirthLitterId");
 
                     b.HasIndex("BreedId");
 
@@ -109,14 +97,6 @@ namespace AnimalAPI.Migrations
                     b.HasIndex("CoatTypeId");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("FatherId1");
-
-                    b.HasIndex("FatherIdId");
-
-                    b.HasIndex("MotherId1");
-
-                    b.HasIndex("MotherIdId");
 
                     b.HasIndex("OwnerId");
 
@@ -127,6 +107,42 @@ namespace AnimalAPI.Migrations
                     b.HasIndex("VarietyId");
 
                     b.ToTable("BreedingRecords");
+                });
+
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.BreedingRecordNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("BreedingRecordId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("Edited")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("Medical")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BreedingRecordId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BreedingRecordNotes");
                 });
 
             modelBuilder.Entity("AnimalAPI.Models.Breeding.CoatType", b =>
@@ -217,6 +233,42 @@ namespace AnimalAPI.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.ContactNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("ContactId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("Edited")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("Medical")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ContactNotes");
+                });
+
             modelBuilder.Entity("AnimalAPI.Models.Breeding.Litter", b =>
                 {
                     b.Property<int>("Id")
@@ -226,20 +278,11 @@ namespace AnimalAPI.Migrations
                     b.Property<int?>("BreederId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BreedingRecordId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateOfAcquisition")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("FatherId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MotherId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -254,91 +297,39 @@ namespace AnimalAPI.Migrations
 
                     b.HasIndex("BreederId");
 
-                    b.HasIndex("BreedingRecordId");
-
-                    b.HasIndex("FatherId");
-
-                    b.HasIndex("MotherId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Litters");
                 });
 
-            modelBuilder.Entity("AnimalAPI.Models.Breeding.MedicalNote", b =>
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.ParentRecord", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Body")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("BreedingRecordId")
+                    b.Property<int>("LitterId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime(6)");
+                    b.HasKey("ParentId", "LitterId");
 
-                    b.Property<DateTime>("Edited")
-                        .HasColumnType("datetime(6)");
+                    b.HasIndex("LitterId");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VeterinarianId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BreedingRecordId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("VeterinarianId");
-
-                    b.ToTable("MedicalNotes");
+                    b.ToTable("ParentRecords");
                 });
 
-            modelBuilder.Entity("AnimalAPI.Models.Breeding.Note", b =>
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.SiblingRecord", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("SiblingId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Body")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("BreedingRecordId")
+                    b.Property<int>("LitterId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ContactId")
-                        .HasColumnType("int");
+                    b.HasKey("SiblingId", "LitterId");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime(6)");
+                    b.HasIndex("LitterId");
 
-                    b.Property<DateTime>("Edited")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BreedingRecordId");
-
-                    b.HasIndex("ContactId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notes");
+                    b.ToTable("SiblingRecords");
                 });
 
             modelBuilder.Entity("AnimalAPI.Models.Breeding.Species", b =>
@@ -510,9 +501,11 @@ namespace AnimalAPI.Migrations
 
             modelBuilder.Entity("AnimalAPI.Models.Breeding.BreedingRecord", b =>
                 {
-                    b.HasOne("AnimalAPI.Models.Breeding.Litter", "BelongsToLitter")
-                        .WithMany("Siblings")
-                        .HasForeignKey("BelongsToLitterId");
+                    b.HasOne("AnimalAPI.Models.Breeding.Litter", "BirthLitter")
+                        .WithMany()
+                        .HasForeignKey("BirthLitterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AnimalAPI.Models.Breeding.Breed", "Breed")
                         .WithMany()
@@ -529,22 +522,6 @@ namespace AnimalAPI.Migrations
                     b.HasOne("AnimalAPI.Models.Breeding.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "Father")
-                        .WithMany()
-                        .HasForeignKey("FatherId1");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "FatherId")
-                        .WithMany()
-                        .HasForeignKey("FatherIdId");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "Mother")
-                        .WithMany()
-                        .HasForeignKey("MotherId1");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "MotherId")
-                        .WithMany()
-                        .HasForeignKey("MotherIdId");
 
                     b.HasOne("AnimalAPI.Models.Breeding.Contact", "Owner")
                         .WithMany()
@@ -563,6 +540,17 @@ namespace AnimalAPI.Migrations
                         .HasForeignKey("VarietyId");
                 });
 
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.BreedingRecordNote", b =>
+                {
+                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", null)
+                        .WithMany("Notes")
+                        .HasForeignKey("BreedingRecordId");
+
+                    b.HasOne("AnimalAPI.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("AnimalAPI.Models.Breeding.CoatType", b =>
                 {
                     b.HasOne("AnimalAPI.Models.User", "User")
@@ -577,50 +565,8 @@ namespace AnimalAPI.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("AnimalAPI.Models.Breeding.Litter", b =>
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.ContactNote", b =>
                 {
-                    b.HasOne("AnimalAPI.Models.Breeding.Contact", "Breeder")
-                        .WithMany()
-                        .HasForeignKey("BreederId");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", null)
-                        .WithMany("Litters")
-                        .HasForeignKey("BreedingRecordId");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "Father")
-                        .WithMany()
-                        .HasForeignKey("FatherId");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "Mother")
-                        .WithMany()
-                        .HasForeignKey("MotherId");
-
-                    b.HasOne("AnimalAPI.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("AnimalAPI.Models.Breeding.MedicalNote", b =>
-                {
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", null)
-                        .WithMany("MedicalNotes")
-                        .HasForeignKey("BreedingRecordId");
-
-                    b.HasOne("AnimalAPI.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("AnimalAPI.Models.Breeding.Contact", "Veterinarian")
-                        .WithMany()
-                        .HasForeignKey("VeterinarianId");
-                });
-
-            modelBuilder.Entity("AnimalAPI.Models.Breeding.Note", b =>
-                {
-                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", null)
-                        .WithMany("Notes")
-                        .HasForeignKey("BreedingRecordId");
-
                     b.HasOne("AnimalAPI.Models.Breeding.Contact", null)
                         .WithMany("Notes")
                         .HasForeignKey("ContactId");
@@ -628,6 +574,47 @@ namespace AnimalAPI.Migrations
                     b.HasOne("AnimalAPI.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.Litter", b =>
+                {
+                    b.HasOne("AnimalAPI.Models.Breeding.Contact", "Breeder")
+                        .WithMany()
+                        .HasForeignKey("BreederId");
+
+                    b.HasOne("AnimalAPI.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.ParentRecord", b =>
+                {
+                    b.HasOne("AnimalAPI.Models.Breeding.Litter", "Litter")
+                        .WithMany("Parents")
+                        .HasForeignKey("LitterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AnimalAPI.Models.Breeding.SiblingRecord", b =>
+                {
+                    b.HasOne("AnimalAPI.Models.Breeding.Litter", "Litter")
+                        .WithMany("Siblings")
+                        .HasForeignKey("LitterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "Sibling")
+                        .WithMany()
+                        .HasForeignKey("SiblingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AnimalAPI.Models.Breeding.Species", b =>

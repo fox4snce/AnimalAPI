@@ -58,9 +58,13 @@ namespace AnimalAPI.Services.BreedingRecordService
             List<BreedingRecord> records = UserRole.Equals("Admin") ?
                 await _context.BreedingRecords
                 .Include(br => br.BirthLitter)
+                .Include(br => br.Notes)
+                //.ThenInclude(brn => brn.Note)
                 .ToListAsync() :
                 await _context.BreedingRecords
                 .Include(br => br.BirthLitter)
+                .Include(br => br.Notes)
+                //.ThenInclude(brn => brn.Note)
                 .Where(c => c.User.Id == GetUserId()).ToListAsync();
 
             return records.Select(c => _mapper.Map<GetBreedingRecordDto>(c)).ToList();

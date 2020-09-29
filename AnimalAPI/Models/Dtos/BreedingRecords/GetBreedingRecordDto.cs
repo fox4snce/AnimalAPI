@@ -30,7 +30,6 @@ namespace AnimalAPI.Models.Dtos.BreedingRecords
         public CoatType CoatType { get; set; }
         public Species Species { get; set; }
 
-        public List<Note> Notes { get; set; }
-        public List<MedicalNote> MedicalNotes { get; set; }
+        public List<BreedingRecordNote> Notes { get; set; }
     }
 }

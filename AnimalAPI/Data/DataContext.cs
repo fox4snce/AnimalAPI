@@ -34,12 +34,14 @@ namespace AnimalAPI.Data
         public DbSet<Color> Colors { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Litter> Litters { get; set; }
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<MedicalNote> MedicalNotes { get; set; }
         public DbSet<Species> AllSpecies { get; set; }
         public DbSet<Variety> Varieties { get; set; }
         public DbSet<ParentRecord> ParentRecords { get; set; }
         public DbSet<SiblingRecord> SiblingRecords { get; set; }
+
+        public DbSet<BreedingRecordNote> BreedingRecordNotes { get; set; }
+        public DbSet<ContactNote> ContactNotes { get; set; }
+
 
 
 
@@ -48,6 +50,8 @@ namespace AnimalAPI.Data
         {
             modelBuilder.Entity<CharacterSkill>()
                 .HasKey(cs => new { cs.CharacterId, cs.SkillId });
+
+           
 
             modelBuilder.Entity<ParentRecord>()
                 .HasKey(pr => new { pr.ParentId, pr.LitterId });

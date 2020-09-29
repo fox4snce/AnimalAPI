@@ -22,7 +22,7 @@ namespace AnimalAPI.Models.Breeding
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
         public string CellPhone { get; set; }
-        public List<Note> Notes { get; set; }
+        public List<ContactNote> Notes { get; set; }
         
     }
 }

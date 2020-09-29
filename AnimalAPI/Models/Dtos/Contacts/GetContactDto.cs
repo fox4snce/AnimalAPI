@@ -23,6 +23,7 @@ namespace AnimalAPI.Models.Dtos.Contacts
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
         public string CellPhone { get; set; }
-        public List<Note> Notes { get; set; }
+
+        public List<BreedingRecordNote> Notes { get; set; }
     }
 }
