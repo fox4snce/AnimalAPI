@@ -23,6 +23,8 @@ using AnimalAPI.Services.CharacterSkillService;
 using AnimalAPI.Services.FightService;
 using AnimalAPI.Services.BreedingRecordService;
 using AnimalAPI.Services.ContactService;
+using AnimalAPI.Services.BreedingRecordNoteService;
+using AnimalAPI.Services.ContactNoteService;
 
 namespace AnimalAPI
 {
@@ -54,6 +56,8 @@ namespace AnimalAPI
             services.AddScoped<IFightService, FightService>();
             services.AddScoped<IBreedingRecordService, BreedingRecordService>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IBreedingRecordNoteService, BreedingRecordNoteService>();
+            services.AddScoped<IContactNoteService, ContactNoteService>();
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

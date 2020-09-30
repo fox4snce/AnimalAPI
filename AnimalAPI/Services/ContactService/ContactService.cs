@@ -138,8 +138,10 @@ namespace AnimalAPI.Services.ContactService
 
             List<Contact> records = UserRole.Equals("Admin") ?
                 await _context.Contacts
+                .Include(br => br.Notes)
                 .ToListAsync() :
                 await _context.Contacts
+                .Include(br => br.Notes)
                 .Where(c => c.User.Id == GetUserId()).ToListAsync();
 
             return records.Select(c => _mapper.Map<GetContactDto>(c)).ToList();

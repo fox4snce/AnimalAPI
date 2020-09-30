@@ -33,7 +33,7 @@ namespace AnimalAPI.Controllers
             return Ok(await _ContactService.CreateContact(newContact));
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(await _ContactService.GetAllContacts());

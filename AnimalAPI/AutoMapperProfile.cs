@@ -6,6 +6,7 @@ using AnimalAPI.Models.Dtos.Character;
 using AnimalAPI.Models.Dtos.CharacterSkill;
 using AnimalAPI.Models.Dtos.Contacts;
 using AnimalAPI.Models.Dtos.Fight;
+using AnimalAPI.Models.Dtos.Notes;
 using AnimalAPI.Models.Dtos.Weapon;
 using AutoMapper;
 using System;
@@ -41,6 +42,17 @@ namespace AnimalAPI
             CreateMap<Contact, GetContactDto>();
             CreateMap<CreateContactDto, Contact>();
             CreateMap<UpdatedContactDto, Contact>();
+
+            // BreedingRecordNotes
+            CreateMap<BreedingRecordNote, GetNoteDto>();
+            CreateMap<CreateNoteDto, BreedingRecordNote>();
+            CreateMap<UpdatedNoteDto, BreedingRecordNote>();
+
+            // ContactNotes
+            CreateMap<ContactNote, GetNoteDto>();
+            CreateMap<CreateNoteDto, ContactNote>();
+            CreateMap<UpdatedNoteDto, ContactNote>();
+
 
         }
     }
