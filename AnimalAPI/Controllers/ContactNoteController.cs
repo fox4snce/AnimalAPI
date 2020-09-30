@@ -1,17 +1,11 @@
 ﻿
 using AnimalAPI.Services.ContactNoteService;
-using AnimalAPI.Models;
-using AnimalAPI.Models.Dtos;
-using AnimalAPI.Models.Dtos.Character;
-using AnimalAPI.Services.CharacterService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AnimalAPI.Models.Dtos.Notes;
+using AnimalAPI.Models.Util;
 
 namespace AnimalAPI.Controllers
 {

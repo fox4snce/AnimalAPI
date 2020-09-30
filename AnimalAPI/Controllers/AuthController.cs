@@ -1,6 +1,8 @@
 ﻿using AnimalAPI.Data;
 using AnimalAPI.Models;
+using AnimalAPI.Models.Auth;
 using AnimalAPI.Models.Dtos.User;
+using AnimalAPI.Models.Util;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

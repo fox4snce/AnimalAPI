@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Services\ContactService\" />
+    <Folder Include="Services\CharacteristicService\" />
   </ItemGroup>
 
 

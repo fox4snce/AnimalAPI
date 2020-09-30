@@ -1,15 +1,9 @@
 ﻿using AnimalAPI.Models.Dtos.Contacts;
+using AnimalAPI.Models.Util;
 using AnimalAPI.Services.ContactService;
-using AnimalAPI.Models;
-using AnimalAPI.Models.Dtos;
-using AnimalAPI.Models.Dtos.Character;
-using AnimalAPI.Services.CharacterService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AnimalAPI.Controllers

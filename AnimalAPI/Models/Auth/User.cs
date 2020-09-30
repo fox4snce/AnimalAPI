@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AnimalAPI.Models
+namespace AnimalAPI.Models.Auth
 {
     public class User
     {

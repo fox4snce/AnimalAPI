@@ -1,5 +1,6 @@
 ﻿using AnimalAPI.Models;
 using AnimalAPI.Models.Dtos.Notes;
+using AnimalAPI.Models.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;

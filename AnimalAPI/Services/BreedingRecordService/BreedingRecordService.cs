@@ -2,6 +2,7 @@
 using AnimalAPI.Models;
 using AnimalAPI.Models.Breeding;
 using AnimalAPI.Models.Dtos.BreedingRecords;
+using AnimalAPI.Models.Util;
 using AnimalAPI.Utility;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;

@@ -1,7 +1,5 @@
-﻿using AnimalAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AnimalAPI.Models.Auth;
+using AnimalAPI.Models.Util;
 using System.Threading.Tasks;
 
 namespace AnimalAPI.Data

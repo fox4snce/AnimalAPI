@@ -1,4 +1,6 @@
 ﻿using AnimalAPI.Models;
+using AnimalAPI.Models.Auth;
+using AnimalAPI.Models.Util;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
