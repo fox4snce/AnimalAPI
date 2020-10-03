@@ -12,6 +12,9 @@ namespace AnimalAPI.Models.Dtos.Litters
         public DateTime DateOfBirth { get; set; }
         public DateTime DateOfAcquisition { get; set; }
         public Contact Breeder { get; set; }
-        
+
+        public List<ParentRecord> Parents { get; set; }
+        public List<SiblingRecord> Siblings { get; set; }
+
     }
 }

@@ -43,6 +43,8 @@ namespace AnimalAPI.Data
 
             modelBuilder.Entity<BreedingRecordNote>()
                 .Ignore(brn => brn.BreedingRecord);
+
+            
         }
     }
 }

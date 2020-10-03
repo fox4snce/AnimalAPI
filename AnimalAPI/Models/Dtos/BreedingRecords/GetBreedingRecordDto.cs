@@ -15,20 +15,14 @@ namespace AnimalAPI.Models.Dtos.BreedingRecords
         public string Name { get; set; } = string.Empty;
         public Contact Owner { get; set; }
         public bool Public { get; set; } = false;
-
-        //public GetLitterDto Litter { get; set; }
-        public GetLitterDto BirthLitter { get; set; }
-        public DateTime Birthday { get; set; }
-
-
         public Gender Sex { get; set; }
-
-
+        public DateTime Birthday { get; set; }
         public Contact Breeder { get; set; }
         public DateTime DateOfAcquisition { get; set; }
-
+        public List<GetCharacteristicDto> Characteristics { get; set; }
+        public GetLitterDto BirthLitter { get; set; }
         public List<BreedingRecordNote> Notes { get; set; }
 
-        public List<GetCharacteristicDto> Characteristics { get; set; }
+
     }
 }

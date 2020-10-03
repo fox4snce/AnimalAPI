@@ -16,11 +16,10 @@ namespace AnimalAPI.Models.Breeding
         public Contact Breeder { get; set; }
         public DateTime DateOfAcquisition { get; set; }
         public Litter BirthLitter { get; set; }
-        public int BirthLitterId { get; set; }
 
-        public List<BreedingRecordCharacteristic> BreedingRecordCharacteristics { get; set; }
+        public ICollection<BreedingRecordCharacteristic> BreedingRecordCharacteristics { get; set; }
 
-        public List<BreedingRecordNote> Notes { get; set; }
+        public ICollection<BreedingRecordNote> Notes { get; set; }
 
     }
 }
