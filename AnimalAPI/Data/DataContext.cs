@@ -34,6 +34,10 @@ namespace AnimalAPI.Data
 
             modelBuilder.Entity<SiblingRecord>()
                 .HasKey(sr => new { sr.SiblingId, sr.LitterId });
+
+            modelBuilder.Entity<BreedingRecord>()
+                .HasMany(br => br.Characteristics)
+                .WithOne();
         }
     }
 }

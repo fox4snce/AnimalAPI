@@ -10,17 +10,17 @@ namespace AnimalAPI.Services.CharacteristicService
     public interface ICharacteristicService
     {
         // Create
-        Task<ServiceResponse<List<GetCharacteristicDto>>> CreateContactCharacteristic(CreateCharacteristicDto newCharacteristic);
+        Task<ServiceResponse<List<GetCharacteristicDto>>> CreateCharacteristic(CreateCharacteristicDto newCharacteristic);
 
         // Read
-        Task<ServiceResponse<List<GetCharacteristicDto>>> GetAllContactCharacteristics();
+        Task<ServiceResponse<List<GetCharacteristicDto>>> GetAllCharacteristics();
 
-        Task<ServiceResponse<GetCharacteristicDto>> GetContactCharacteristicById(int id);
+        Task<ServiceResponse<GetCharacteristicDto>> GetCharacteristicById(int id);
 
         // Update
-        Task<ServiceResponse<GetCharacteristicDto>> UpdateContactCharacteristic(UpdatedCharacteristicDto updatedCharacteristic);
+        Task<ServiceResponse<GetCharacteristicDto>> UpdateCharacteristic(UpdatedCharacteristicDto updatedCharacteristic);
 
         // Delete
-        Task<ServiceResponse<List<GetCharacteristicDto>>> DeleteContactCharacteristic(int id);
+        Task<ServiceResponse<List<GetCharacteristicDto>>> DeleteCharacteristic(int id);
     }
 }
