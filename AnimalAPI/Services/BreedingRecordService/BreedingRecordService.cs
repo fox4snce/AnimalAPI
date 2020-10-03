@@ -60,12 +60,12 @@ namespace AnimalAPI.Services.BreedingRecordService
                 await _context.BreedingRecords
                 .Include(br => br.BirthLitter)
                 .Include(br => br.Notes)
-                //.ThenInclude(brn => brn.Note)
+                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
                 .ToListAsync() :
                 await _context.BreedingRecords
                 .Include(br => br.BirthLitter)
                 .Include(br => br.Notes)
-                //.ThenInclude(brn => brn.Note)
+                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
                 .Where(c => c.User.Id == GetUserId()).ToListAsync();
 
             return records.Select(c => _mapper.Map<GetBreedingRecordDto>(c)).ToList();

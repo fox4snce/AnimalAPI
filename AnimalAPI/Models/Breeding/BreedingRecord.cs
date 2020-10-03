@@ -18,7 +18,7 @@ namespace AnimalAPI.Models.Breeding
         public Litter BirthLitter { get; set; }
         public int BirthLitterId { get; set; }
 
-        public List<Characteristic> Characteristics { get; set; }
+        public List<BreedingRecordCharacteristic> BreedingRecordCharacteristics { get; set; }
 
         public List<BreedingRecordNote> Notes { get; set; }
 

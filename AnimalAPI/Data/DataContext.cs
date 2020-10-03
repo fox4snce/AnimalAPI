@@ -26,6 +26,7 @@ namespace AnimalAPI.Data
         public DbSet<BreedingRecordNote> BreedingRecordNotes { get; set; }
         public DbSet<ContactNote> ContactNotes { get; set; }
         public DbSet<Characteristic> Characteristics { get; set; }
+        public DbSet<BreedingRecordCharacteristic> BreedingRecordCharacteristics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,9 +36,13 @@ namespace AnimalAPI.Data
             modelBuilder.Entity<SiblingRecord>()
                 .HasKey(sr => new { sr.SiblingId, sr.LitterId });
 
-            modelBuilder.Entity<BreedingRecord>()
-                .HasMany(br => br.Characteristics)
-                .WithOne();
+            
+
+            modelBuilder.Entity<BreedingRecordCharacteristic>()
+                .HasKey(brc => new { brc.BreedingRecordId, brc.CharacteristicId });
+
+            modelBuilder.Entity<BreedingRecordNote>()
+                .Ignore(brn => brn.BreedingRecord);
         }
     }
 }

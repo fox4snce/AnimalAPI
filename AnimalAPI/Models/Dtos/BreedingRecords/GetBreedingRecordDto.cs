@@ -1,4 +1,5 @@
 ﻿using AnimalAPI.Models.Breeding;
+using AnimalAPI.Models.Dtos.Characteristics;
 using AnimalAPI.Models.Dtos.Litters;
 using System;
 using System.Collections.Generic;
@@ -27,5 +28,7 @@ namespace AnimalAPI.Models.Dtos.BreedingRecords
         public DateTime DateOfAcquisition { get; set; }
 
         public List<BreedingRecordNote> Notes { get; set; }
+
+        public List<GetCharacteristicDto> Characteristics { get; set; }
     }
 }

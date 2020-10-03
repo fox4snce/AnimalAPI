@@ -15,7 +15,8 @@ namespace AnimalAPI
         public AutoMapperProfile()
         {
             // Breeding Records
-            CreateMap<BreedingRecord, GetBreedingRecordDto>();
+            CreateMap<BreedingRecord, GetBreedingRecordDto>()
+                .ForMember(dto => dto.Characteristics, br => br.MapFrom(br => br.BreedingRecordCharacteristics.Select(brc => brc.Characteristic)));
             CreateMap<CreateBreedingRecordDto, BreedingRecord>();
             CreateMap<UpdatedBreedingRecordDto, BreedingRecord>();
 
