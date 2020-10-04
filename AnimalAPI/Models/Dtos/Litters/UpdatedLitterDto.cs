@@ -1,5 +1,4 @@
 ﻿using AnimalAPI.Models.Breeding;
-using AnimalAPI.Models.Dtos.BreedingRecords;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimalAPI.Models.Dtos.Litters
 {
-    public class GetLitterDto
+    public class UpdatedLitterDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,10 +14,6 @@ namespace AnimalAPI.Models.Dtos.Litters
         public DateTime DateOfBirth { get; set; }
         public DateTime DateOfAcquisition { get; set; }
         public Contact Breeder { get; set; }
-
-        public List<GetBreedingRecordDto> Parents { get; set; }
-        public List<GetBreedingRecordDto> Siblings { get; set; }
-
-
+        
     }
 }

@@ -30,6 +30,24 @@ namespace AnimalAPI.Services.BreedingRecordService
 
         private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
         private string GetUserRole() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+        private async Task<List<GetBreedingRecordDto>> GetAllRecords()
+        {
+            string UserRole = GetUserRole();
+
+            List<BreedingRecord> records = UserRole.Equals("Admin") ?
+                await _context.BreedingRecords
+                .Include(br => br.BirthLitter)
+                .Include(br => br.Notes)
+                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
+                .ToListAsync() :
+                await _context.BreedingRecords
+                .Include(br => br.BirthLitter)
+                .Include(br => br.Notes)
+                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
+                .Where(c => c.User.Id == GetUserId()).ToListAsync();
+
+            return records.Select(c => _mapper.Map<GetBreedingRecordDto>(c)).ToList();
+        }
 
         public async Task<ServiceResponse<List<GetBreedingRecordDto>>> CreateBreedingRecord(CreateBreedingRecordDto newBreedingRecord)
         {
@@ -52,24 +70,7 @@ namespace AnimalAPI.Services.BreedingRecordService
             return serviceResponse;
         }
 
-        private async Task<List<GetBreedingRecordDto>> GetAllRecords()
-        {
-            string UserRole = GetUserRole();
-
-            List<BreedingRecord> records = UserRole.Equals("Admin") ?
-                await _context.BreedingRecords
-                .Include(br => br.BirthLitter)
-                .Include(br => br.Notes)
-                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
-                .ToListAsync() :
-                await _context.BreedingRecords
-                .Include(br => br.BirthLitter)
-                .Include(br => br.Notes)
-                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
-                .Where(c => c.User.Id == GetUserId()).ToListAsync();
-
-            return records.Select(c => _mapper.Map<GetBreedingRecordDto>(c)).ToList();
-        }
+        
 
         public async Task<ServiceResponse<GetBreedingRecordDto>> GetBreedingRecordById(int id)
         {
@@ -80,9 +81,13 @@ namespace AnimalAPI.Services.BreedingRecordService
             BreedingRecord record = UserRole.Equals("Admin") ?
                 await _context.BreedingRecords
                 .Include(br => br.BirthLitter)
+                .Include(br => br.Notes)
+                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
                 .FirstOrDefaultAsync(c => c.Id == id) :
             await _context.BreedingRecords
                 .Include(br => br.BirthLitter)
+                .Include(br => br.Notes)
+                .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
                 .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
 
             serviceResponse.Data = _mapper.Map<GetBreedingRecordDto>(record);
