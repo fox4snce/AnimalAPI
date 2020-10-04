@@ -24,6 +24,8 @@ namespace AnimalAPI
             CreateMap<Litter, GetLitterDto>()
                 .ForMember(dto => dto.Parents, lit => lit.MapFrom(lit => lit.Parents.Select(pr => pr.Parent)))
                 .ForMember(dto => dto.Siblings, lit => lit.MapFrom(lit => lit.Siblings.Select(sr => sr.Sibling)));
+            CreateMap<CreateLitterDto, Litter>();
+            CreateMap<UpdatedLitterDto, Litter>();
 
             // Contacts
             CreateMap<Contact, GetContactDto>();

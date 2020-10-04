@@ -73,7 +73,15 @@ namespace AnimalAPI.Services.LitterService
                 {
                     _context.Litters.Remove(Litter);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = _context.Litters.Where(c => c.User.Id == GetUserId()).Select(c => _mapper.Map<GetLitterDto>(c)).ToList();
+                    serviceResponse.Data = await GetAllRecords();
+
+
+                    //_context.Litters
+                    //.Include(lit => lit.Parents).ThenInclude(parents => parents.Parent)
+                    //.Include(lit => lit.Siblings).ThenInclude(sibling => sibling.Sibling)
+                    //.Where(c => c.User.Id == GetUserId())
+                    //.Select(c => _mapper.Map<GetLitterDto>(c))
+                    //.ToList();
                 }
                 else
                 {
