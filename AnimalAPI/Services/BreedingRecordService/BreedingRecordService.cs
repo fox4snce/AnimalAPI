@@ -36,11 +36,15 @@ namespace AnimalAPI.Services.BreedingRecordService
 
             List<BreedingRecord> records = UserRole.Equals("Admin") ?
                 await _context.BreedingRecords
+                .Include(br => br.Owner)
+                .Include(br => br.Breeder)
                 .Include(br => br.BirthLitter)
                 .Include(br => br.Notes)
                 .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
                 .ToListAsync() :
                 await _context.BreedingRecords
+                .Include(br => br.Owner)
+                .Include(br => br.Breeder)
                 .Include(br => br.BirthLitter)
                 .Include(br => br.Notes)
                 .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
@@ -80,11 +84,15 @@ namespace AnimalAPI.Services.BreedingRecordService
 
             BreedingRecord record = UserRole.Equals("Admin") ?
                 await _context.BreedingRecords
+                .Include(br => br.Owner)
+                .Include(br => br.Breeder)
                 .Include(br => br.BirthLitter)
                 .Include(br => br.Notes)
                 .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)
                 .FirstOrDefaultAsync(c => c.Id == id) :
             await _context.BreedingRecords
+                .Include(br => br.Owner)
+                .Include(br => br.Breeder)
                 .Include(br => br.BirthLitter)
                 .Include(br => br.Notes)
                 .Include(br => br.BreedingRecordCharacteristics).ThenInclude(brc => brc.Characteristic)

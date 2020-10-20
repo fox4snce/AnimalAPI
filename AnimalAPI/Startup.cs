@@ -16,6 +16,7 @@ using AnimalAPI.Services.BreedingRecordNoteService;
 using AnimalAPI.Services.ContactNoteService;
 using AnimalAPI.Services.CharacteristicService;
 using AnimalAPI.Services.LitterService;
+using AnimalAPI.Services.BreedingRecordCharacteristicService;
 
 namespace AnimalAPI
 {
@@ -47,6 +48,7 @@ namespace AnimalAPI
             services.AddScoped<IContactNoteService, ContactNoteService>();
             services.AddScoped<ICharacteristicService, CharacteristicService>();
             services.AddScoped<ILitterService, LitterService>();
+            services.AddScoped<IBreedingRecordCharacteristicService, BreedingRecordCharacteristicService>();
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

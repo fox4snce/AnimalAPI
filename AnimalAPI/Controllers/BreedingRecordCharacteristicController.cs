@@ -1,4 +1,5 @@
 ﻿using AnimalAPI.Models.Dtos.BreedingRecordCharacteristic;
+using AnimalAPI.Models.Dtos.BreedingRecords;
 using AnimalAPI.Models.Util;
 using AnimalAPI.Services.BreedingRecordCharacteristicService;
 using Microsoft.AspNetCore.Authorization;
@@ -28,10 +29,10 @@ namespace AnimalAPI.Controllers
             return Ok(await _breedingRecordCharacteristicService.CreateBreedingRecordCharacteristic(newBreedingRecordCharacteristic));
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteBreedingRecordCharacteristicDto deleteBreedingRecordCharacteristic)
         {
-            ServiceResponse<List<GetBreedingRecordCharacteristicDto>> response = await _breedingRecordCharacteristicService.DeleteBreedingRecordCharacteristic(id);
+            ServiceResponse<List<GetBreedingRecordCharacteristicDto>> response = await _breedingRecordCharacteristicService.DeleteBreedingRecordCharacteristic(deleteBreedingRecordCharacteristic);
             if (response.Data == null)
             {
                 return NotFound(response);

@@ -102,21 +102,33 @@ namespace AnimalAPI.Services.ContactService
 
             try
             {
-                Contact Contact = await _context.Contacts.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedContact.Id);
+                Contact contact = await _context.Contacts.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedContact.Id);
 
                 Contact mappedUpdated = _mapper.Map<Contact>(updatedContact);
 
-                if (Contact.User.Id == GetUserId())
+                if (contact.User.Id == GetUserId())
                 {
-                    Contact = Utility.Util.CloneJson<Contact>(mappedUpdated);
+
+                    contact.FirstName = (updatedContact.FirstName != null) ? updatedContact.FirstName : contact.FirstName;
+                    contact.LastName = (updatedContact.LastName != null) ? updatedContact.LastName : contact.LastName;
+                    contact.Email = (updatedContact.Email != null) ? updatedContact.Email : contact.Email;
+                    contact.Type = (updatedContact.Type != ContactType.Null) ? updatedContact.Type : contact.Type;
+                    contact.Address = (updatedContact.Address != null) ? updatedContact.Address : contact.Address;
+                    contact.Address2 = (updatedContact.Address2 != null) ? updatedContact.Address2 : contact.Address2;
+                    contact.City = (updatedContact.City != null) ? updatedContact.City : contact.City;
+                    contact.State = (updatedContact.State != null) ? updatedContact.State : contact.State;
+                    contact.ZipCode = (updatedContact.ZipCode != null) ? updatedContact.ZipCode : contact.ZipCode;
+                    contact.Country = (updatedContact.Country != null) ? updatedContact.Country : contact.Country;
+                    contact.PhoneNumber = (updatedContact.PhoneNumber != null) ? updatedContact.PhoneNumber : contact.PhoneNumber;
+                    contact.CellPhone = (updatedContact.CellPhone != null) ? updatedContact.CellPhone : contact.CellPhone;
 
 
-                    _context.Contacts.Update(Contact);
+                    _context.Contacts.Update(contact);
 
                     await _context.SaveChangesAsync();
 
 
-                    serviceResponse.Data = _mapper.Map<GetContactDto>(Contact);
+                    serviceResponse.Data = _mapper.Map<GetContactDto>(contact);
                 }
                 else
                 {

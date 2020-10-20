@@ -1,5 +1,6 @@
 ﻿
 using AnimalAPI.Models.Breeding;
+using AnimalAPI.Models.Dtos.BreedingRecordCharacteristic;
 using AnimalAPI.Models.Dtos.BreedingRecords;
 using AnimalAPI.Models.Dtos.Characteristics;
 using AnimalAPI.Models.Dtos.Contacts;
@@ -46,6 +47,11 @@ namespace AnimalAPI
             CreateMap<Characteristic, GetCharacteristicDto>();
             CreateMap<CreateCharacteristicDto, Characteristic>();
             CreateMap<UpdatedCharacteristicDto, Characteristic>();
+
+            // BreedingRecordCharacteristics
+            CreateMap<BreedingRecordCharacteristic, GetBreedingRecordCharacteristicDto>();
+            CreateMap<CreateBreedingRecordCharacteristicDto, BreedingRecordCharacteristic>();
+            CreateMap<UpdatedBreedingRecordCharacteristicDto, BreedingRecordCharacteristic>();
 
         }
     }

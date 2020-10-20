@@ -22,6 +22,6 @@ namespace AnimalAPI.Services.BreedingRecordCharacteristicService
         Task<ServiceResponse<GetBreedingRecordCharacteristicDto>> UpdateBreedingRecordCharacteristic(UpdatedBreedingRecordCharacteristicDto updatedBreedingRecordCharacteristic);
 
         // Delete
-        Task<ServiceResponse<List<GetBreedingRecordCharacteristicDto>>> DeleteBreedingRecordCharacteristic(int id);
+        Task<ServiceResponse<List<GetBreedingRecordCharacteristicDto>>> DeleteBreedingRecordCharacteristic(DeleteBreedingRecordCharacteristicDto deleteBreedingRecordCharacteristicDto);
     }
 }

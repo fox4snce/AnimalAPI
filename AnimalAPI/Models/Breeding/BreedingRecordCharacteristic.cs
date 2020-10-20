@@ -8,7 +8,6 @@ namespace AnimalAPI.Models.Breeding
 {
     public class BreedingRecordCharacteristic
     {
-        public User User { get; set; }
         public int BreedingRecordId { get; set; }
         public BreedingRecord BreedingRecord { get; set; }
 

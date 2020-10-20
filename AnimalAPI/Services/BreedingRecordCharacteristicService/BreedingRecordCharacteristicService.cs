@@ -81,9 +81,34 @@ namespace AnimalAPI.Services.BreedingRecordCharacteristicService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetBreedingRecordCharacteristicDto>>> DeleteBreedingRecordCharacteristic(int id)
+        public async Task<ServiceResponse<List<GetBreedingRecordCharacteristicDto>>> DeleteBreedingRecordCharacteristic(DeleteBreedingRecordCharacteristicDto record)
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<GetBreedingRecordCharacteristicDto>> serviceResponse = new ServiceResponse<List<GetBreedingRecordCharacteristicDto>>();
+
+            try
+            {
+                BreedingRecordCharacteristic breedingRecordCharacteristic = await _context.BreedingRecordCharacteristics.FirstAsync(c => c.BreedingRecordId == record.BreedingRecordId && c.CharacteristicId == record.CharacteristicId);
+
+                if (breedingRecordCharacteristic != null)
+                {
+                    _context.BreedingRecordCharacteristics.Remove(breedingRecordCharacteristic);
+                    await _context.SaveChangesAsync();
+                    serviceResponse.Data = _context.BreedingRecordCharacteristics.Where(c => c.BreedingRecordId == record.BreedingRecordId).Select(c => _mapper.Map<GetBreedingRecordCharacteristicDto>(c)).ToList();
+                }
+                else
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "BreedingRecord not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
+            return serviceResponse;
+
         }
 
         public Task<ServiceResponse<List<GetBreedingRecordCharacteristicDto>>> GetAllBreedingRecordCharacteristics()
