@@ -18,6 +18,7 @@ using AnimalAPI.Services.CharacteristicService;
 using AnimalAPI.Services.LitterService;
 using AnimalAPI.Services.BreedingRecordCharacteristicService;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Net.Http.Headers;
 
 namespace AnimalAPI
 {
@@ -29,6 +30,7 @@ namespace AnimalAPI
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,6 +42,19 @@ namespace AnimalAPI
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:5000", "https://localhost:5001")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  });
+            });
+
+            
 
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository, AuthRepository>();
@@ -79,6 +94,8 @@ namespace AnimalAPI
 
             //app.UseHttpsRedirection();
 
+            
+
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
@@ -90,10 +107,14 @@ namespace AnimalAPI
 
             app.UseRouting();
 
+            
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+            
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
 
