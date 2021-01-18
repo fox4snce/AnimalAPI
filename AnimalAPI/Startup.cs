@@ -17,6 +17,7 @@ using AnimalAPI.Services.ContactNoteService;
 using AnimalAPI.Services.CharacteristicService;
 using AnimalAPI.Services.LitterService;
 using AnimalAPI.Services.BreedingRecordCharacteristicService;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace AnimalAPI
 {
@@ -88,6 +89,11 @@ namespace AnimalAPI
             });
 
             app.UseRouting();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
 
