@@ -3,6 +3,7 @@ using AnimalAPI.Models;
 using AnimalAPI.Models.Auth;
 using AnimalAPI.Models.Dtos.User;
 using AnimalAPI.Models.Util;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,18 @@ namespace AnimalAPI.Controllers
             {
                 return Ok(response);
             }
+        }
+
+        [Authorize(Roles = "User,Admin")]
+        [HttpGet("Verify")]
+        public async Task<IActionResult> Verify()
+        {
+            ServiceResponse<string> response = new ServiceResponse<string>();
+
+            response.Success = true;
+            response.Message = "Ok";
+
+            return Ok(response);
         }
 
     }
