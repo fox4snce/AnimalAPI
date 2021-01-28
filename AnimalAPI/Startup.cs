@@ -12,13 +12,13 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using AnimalAPI.Services.BreedingRecordService;
 using AnimalAPI.Services.ContactService;
-using AnimalAPI.Services.BreedingRecordNoteService;
-using AnimalAPI.Services.ContactNoteService;
+
 using AnimalAPI.Services.CharacteristicService;
 using AnimalAPI.Services.LitterService;
 using AnimalAPI.Services.BreedingRecordCharacteristicService;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Net.Http.Headers;
+using AnimalAPI.Services.NoteService;
 
 namespace AnimalAPI
 {
@@ -60,11 +60,10 @@ namespace AnimalAPI
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IBreedingRecordService, BreedingRecordService>();
             services.AddScoped<IContactService, ContactService>();
-            services.AddScoped<IBreedingRecordNoteService, BreedingRecordNoteService>();
-            services.AddScoped<IContactNoteService, ContactNoteService>();
             services.AddScoped<ICharacteristicService, CharacteristicService>();
             services.AddScoped<ILitterService, LitterService>();
             services.AddScoped<IBreedingRecordCharacteristicService, BreedingRecordCharacteristicService>();
+            services.AddScoped<INoteService, NoteService>();
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

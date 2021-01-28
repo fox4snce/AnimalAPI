@@ -1,4 +1,5 @@
-﻿using AnimalAPI.Services.BreedingRecordNoteService;
+﻿
+using AnimalAPI.Services.NoteService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,37 +13,37 @@ namespace AnimalAPI.Controllers
     [Authorize(Roles = "User,Admin")]
     [ApiController]
     [Route("[controller]")]
-    public class BreedingRecordNoteController : ControllerBase
+    public class NoteController : ControllerBase
     {
-        private readonly IBreedingRecordNoteService _BreedingRecordNoteService;
+        private readonly INoteService _NoteService;
 
-        public BreedingRecordNoteController(IBreedingRecordNoteService BreedingRecordNoteService)
+        public NoteController(INoteService NoteService)
         {
-            _BreedingRecordNoteService = BreedingRecordNoteService;
+            _NoteService = NoteService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBreedingRecordNote(CreateNoteDto newNote)
+        public async Task<IActionResult> CreateNote(CreateNoteDto newNote)
         {
-            return Ok(await _BreedingRecordNoteService.CreateBreedingRecordNote(newNote));
+            return Ok(await _NoteService.CreateNote(newNote));
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _BreedingRecordNoteService.GetAllBreedingRecordNotes());
+            return Ok(await _NoteService.GetAllNotes());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSingle(int id)
         {
-            return Ok(await _BreedingRecordNoteService.GetBreedingRecordNoteById(id));
+            return Ok(await _NoteService.GetNoteById(id));
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBreedingRecordNote(UpdatedNoteDto updatedBreedingRecordNote)
+        public async Task<IActionResult> UpdateNote(UpdatedNoteDto updatedNote)
         {
-            ServiceResponse<GetNoteDto> response = await _BreedingRecordNoteService.UpdateBreedingRecordNote(updatedBreedingRecordNote);
+            ServiceResponse<GetNoteDto> response = await _NoteService.UpdateNote(updatedNote);
 
             if (response.Data == null)
             {
@@ -58,7 +59,7 @@ namespace AnimalAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            ServiceResponse<List<GetNoteDto>> response = await _BreedingRecordNoteService.DeleteBreedingRecordNote(id);
+            ServiceResponse<List<GetNoteDto>> response = await _NoteService.DeleteNote(id);
             if (response.Data == null)
             {
                 return NotFound(response);

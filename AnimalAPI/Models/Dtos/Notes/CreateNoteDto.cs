@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimalAPI.Models.Breeding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +9,14 @@ namespace AnimalAPI.Models.Dtos.Notes
     public class CreateNoteDto
     {
 
-        public int ReferenceId { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime Edited { get; set; } = DateTime.Now;
         public bool Medical { get; set; } = false;
         public string Title { get; set; }
         public string Body { get; set; }
+        public NoteType NoteType { get; set; }
+
+        public int ReferenceId { get; set; }
+        
     }
 }

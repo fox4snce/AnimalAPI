@@ -3,6 +3,7 @@ using AnimalAPI.Models;
 using AnimalAPI.Models.Breeding;
 using AnimalAPI.Models.Dtos.Notes;
 using AnimalAPI.Models.Util;
+using AnimalAPI.Services.NoteService;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +13,16 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace AnimalAPI.Services.ContactNoteService
+namespace AnimalAPI.Services.NoteService
 {
-    public class ContactNoteService : IContactNoteService
+    public class NoteService : INoteService
     {
 
         private readonly IMapper _mapper;
         private readonly DataContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ContactNoteService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor)
+        public NoteService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
@@ -32,13 +33,25 @@ namespace AnimalAPI.Services.ContactNoteService
         private string GetUserRole() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
 
 
-        public async Task<ServiceResponse<List<GetNoteDto>>> CreateContactNote(CreateNoteDto newNote)
+        public async Task<ServiceResponse<List<GetNoteDto>>> CreateNote(CreateNoteDto newNote)
         {
             ServiceResponse<List<GetNoteDto>> serviceResponse = new ServiceResponse<List<GetNoteDto>>();
-            ContactNote note = _mapper.Map<ContactNote>(newNote);
+            Note note = _mapper.Map<Note>(newNote);
             note.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
-            note.ContactId = newNote.ReferenceId;
-            await _context.ContactNotes.AddAsync(note);
+            
+            switch (newNote.NoteType)
+            {
+                case NoteType.BreedingRecord:
+                    note.BreedingRecordId = newNote.ReferenceId;
+                    break;
+                case NoteType.Contact:
+                    note.ContactId = newNote.ReferenceId;
+                    break;
+                default:
+                    break;
+            }
+            
+            await _context.Notes.AddAsync(note);
             await _context.SaveChangesAsync();
 
             serviceResponse.Data = await GetAllRecords();
@@ -46,24 +59,24 @@ namespace AnimalAPI.Services.ContactNoteService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetNoteDto>>> DeleteContactNote(int id)
+        public async Task<ServiceResponse<List<GetNoteDto>>> DeleteNote(int id)
         {
             ServiceResponse<List<GetNoteDto>> serviceResponse = new ServiceResponse<List<GetNoteDto>>();
 
             try
             {
-                ContactNote ContactNote = await _context.ContactNotes.FirstAsync(c => c.Id == id && c.User.Id == GetUserId());
+                Note Note = await _context.Notes.FirstAsync(c => c.Id == id && c.User.Id == GetUserId());
 
-                if (ContactNote != null)
+                if (Note != null)
                 {
-                    _context.ContactNotes.Remove(ContactNote);
+                    _context.Notes.Remove(Note);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = _context.ContactNotes.Where(c => c.User.Id == GetUserId()).Select(c => _mapper.Map<GetNoteDto>(c)).ToList();
+                    serviceResponse.Data = _context.Notes.Where(c => c.User.Id == GetUserId()).Select(c => _mapper.Map<GetNoteDto>(c)).ToList();
                 }
                 else
                 {
                     serviceResponse.Success = false;
-                    serviceResponse.Message = "ContactNote not found.";
+                    serviceResponse.Message = "Note not found.";
                 }
             }
             catch (Exception ex)
@@ -75,48 +88,48 @@ namespace AnimalAPI.Services.ContactNoteService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetNoteDto>>> GetAllContactNotes()
+        public async Task<ServiceResponse<List<GetNoteDto>>> GetAllNotes()
         {
             ServiceResponse<List<GetNoteDto>> serviceResponse = new ServiceResponse<List<GetNoteDto>>();
             serviceResponse.Data = await GetAllRecords();
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetNoteDto>> GetContactNoteById(int id)
+        public async Task<ServiceResponse<GetNoteDto>> GetNoteById(int id)
         {
             ServiceResponse<GetNoteDto> serviceResponse = new ServiceResponse<GetNoteDto>();
 
             string UserRole = GetUserRole();
 
-            ContactNote note = UserRole.Equals("Admin") ?
-                await _context.ContactNotes
+            Note note = UserRole.Equals("Admin") ?
+                await _context.Notes
                 .FirstOrDefaultAsync(c => c.Id == id) :
-            await _context.ContactNotes
+            await _context.Notes
                 .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
 
             serviceResponse.Data = _mapper.Map<GetNoteDto>(note);
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetNoteDto>> UpdateContactNote(UpdatedNoteDto updatedNote)
+        public async Task<ServiceResponse<GetNoteDto>> UpdateNote(UpdatedNoteDto updatedNote)
         {
             ServiceResponse<GetNoteDto> serviceResponse = new ServiceResponse<GetNoteDto>();
 
             try
             {
-                ContactNote note = await _context.ContactNotes.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedNote.Id);
+                Note note = await _context.Notes.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedNote.Id);
 
-                ContactNote mappedUpdated = _mapper.Map<ContactNote>(updatedNote);
+                Note mappedUpdated = _mapper.Map<Note>(updatedNote);
 
-                mappedUpdated.ContactId = updatedNote.ReferenceId;
+                mappedUpdated.Id = updatedNote.ReferenceId;
                 mappedUpdated.Edited = DateTime.Now;
 
                 if (note.User.Id == GetUserId())
                 {
-                    note = Utility.Util.CloneJson<ContactNote>(mappedUpdated);
+                    note = Utility.Util.CloneJson<Note>(mappedUpdated);
 
 
-                    _context.ContactNotes.Update(note);
+                    _context.Notes.Update(note);
 
                     await _context.SaveChangesAsync();
 
@@ -142,10 +155,10 @@ namespace AnimalAPI.Services.ContactNoteService
         {
             string UserRole = GetUserRole();
 
-            List<ContactNote> records = UserRole.Equals("Admin") ?
-                await _context.ContactNotes
+            List<Note> records = UserRole.Equals("Admin") ?
+                await _context.Notes
                 .ToListAsync() :
-                await _context.ContactNotes
+                await _context.Notes
                 .Where(c => c.User.Id == GetUserId()).ToListAsync();
 
             return records.Select(c => _mapper.Map<GetNoteDto>(c)).ToList();

@@ -19,7 +19,7 @@ namespace AnimalAPI.Models.Breeding
 
         public ICollection<BreedingRecordCharacteristic> BreedingRecordCharacteristics { get; set; }
 
-        public ICollection<BreedingRecordNote> Notes { get; set; }
+        public ICollection<Note> Notes { get; set; }
 
     }
 }

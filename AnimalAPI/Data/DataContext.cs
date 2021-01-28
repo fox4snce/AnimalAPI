@@ -23,10 +23,12 @@ namespace AnimalAPI.Data
         public DbSet<Litter> Litters { get; set; }
         public DbSet<ParentRecord> ParentRecords { get; set; }
         public DbSet<SiblingRecord> SiblingRecords { get; set; }
-        public DbSet<BreedingRecordNote> BreedingRecordNotes { get; set; }
-        public DbSet<ContactNote> ContactNotes { get; set; }
+        //public DbSet<BreedingRecordNote> BreedingRecordNotes { get; set; }
+        //public DbSet<ContactNote> ContactNotes { get; set; }
         public DbSet<Characteristic> Characteristics { get; set; }
         public DbSet<BreedingRecordCharacteristic> BreedingRecordCharacteristics { get; set; }
+
+        public DbSet<Note> Notes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,10 +43,10 @@ namespace AnimalAPI.Data
             modelBuilder.Entity<BreedingRecordCharacteristic>()
                 .HasKey(brc => new { brc.BreedingRecordId, brc.CharacteristicId });
 
-            modelBuilder.Entity<BreedingRecordNote>()
-                .Ignore(brn => brn.BreedingRecord);
+            
 
             
+                
         }
     }
 }

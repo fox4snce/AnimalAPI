@@ -33,15 +33,12 @@ namespace AnimalAPI
             CreateMap<CreateContactDto, Contact>();
             CreateMap<UpdatedContactDto, Contact>();
 
-            // BreedingRecordNotes
-            CreateMap<BreedingRecordNote, GetNoteDto>();
-            CreateMap<CreateNoteDto, BreedingRecordNote>();
-            CreateMap<UpdatedNoteDto, BreedingRecordNote>();
+            
 
-            // ContactNotes
-            CreateMap<ContactNote, GetNoteDto>();
-            CreateMap<CreateNoteDto, ContactNote>();
-            CreateMap<UpdatedNoteDto, ContactNote>();
+            // Notes
+            CreateMap<Note, GetNoteDto>();
+            CreateMap<CreateNoteDto, Note>();
+            CreateMap<UpdatedNoteDto, Note>();
 
             // Characteristics
             CreateMap<Characteristic, GetCharacteristicDto>();

@@ -21,7 +21,7 @@ namespace AnimalAPI.Models.Dtos.BreedingRecords
         public DateTime DateOfAcquisition { get; set; }
         public List<GetCharacteristicDto> Characteristics { get; set; }
         public GetLitterDto BirthLitter { get; set; }
-        public List<BreedingRecordNote> Notes { get; set; }
+        public ICollection<Note> Notes { get; set; }
 
 
     }

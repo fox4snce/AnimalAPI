@@ -3,14 +3,16 @@ using System;
 using AnimalAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnimalAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210128143625_RemovedOldNotes")]
+    partial class RemovedOldNotes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,10 +223,10 @@ namespace AnimalAPI.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("BreedingRecordId")
+                    b.Property<int>("BreedingRecordId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ContactId")
+                    b.Property<int>("ContactId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
@@ -346,11 +348,15 @@ namespace AnimalAPI.Migrations
                 {
                     b.HasOne("AnimalAPI.Models.Breeding.BreedingRecord", "BreedingRecord")
                         .WithMany("Notes")
-                        .HasForeignKey("BreedingRecordId");
+                        .HasForeignKey("BreedingRecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AnimalAPI.Models.Breeding.Contact", "Contact")
                         .WithMany("Notes")
-                        .HasForeignKey("ContactId");
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AnimalAPI.Models.Auth.User", "User")
                         .WithMany()
