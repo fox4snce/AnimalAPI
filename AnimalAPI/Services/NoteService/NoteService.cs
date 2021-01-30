@@ -35,10 +35,16 @@ namespace AnimalAPI.Services.NoteService
 
         public async Task<ServiceResponse<List<GetNoteDto>>> CreateNote(CreateNoteDto newNote)
         {
+            // Response
             ServiceResponse<List<GetNoteDto>> serviceResponse = new ServiceResponse<List<GetNoteDto>>();
+
+            // Map to Note
             Note note = _mapper.Map<Note>(newNote);
+
+            // Set the note's user based on Id
             note.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
             
+            // Which type of note is it?
             switch (newNote.NoteType)
             {
                 case NoteType.BreedingRecord:
@@ -51,9 +57,11 @@ namespace AnimalAPI.Services.NoteService
                     break;
             }
             
+            // Save
             await _context.Notes.AddAsync(note);
             await _context.SaveChangesAsync();
 
+            // Return all the notes
             serviceResponse.Data = await GetAllRecords();
 
             return serviceResponse;
@@ -121,7 +129,18 @@ namespace AnimalAPI.Services.NoteService
 
                 Note mappedUpdated = _mapper.Map<Note>(updatedNote);
 
-                mappedUpdated.Id = updatedNote.ReferenceId;
+                switch (updatedNote.NoteType)
+                {
+                    case NoteType.BreedingRecord:
+                        mappedUpdated.BreedingRecordId = updatedNote.ReferenceId;
+                        break;
+                    case NoteType.Contact:
+                        mappedUpdated.ContactId = updatedNote.ReferenceId;
+                        break;
+                    default:
+                        break;
+                }
+
                 mappedUpdated.Edited = DateTime.Now;
 
                 if (note.User.Id == GetUserId())
