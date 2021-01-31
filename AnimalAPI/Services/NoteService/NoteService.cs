@@ -70,10 +70,12 @@ namespace AnimalAPI.Services.NoteService
         public async Task<ServiceResponse<List<GetNoteDto>>> DeleteNote(int id)
         {
             ServiceResponse<List<GetNoteDto>> serviceResponse = new ServiceResponse<List<GetNoteDto>>();
+            string UserRole = GetUserRole();
 
             try
             {
-                Note Note = await _context.Notes.FirstAsync(c => c.Id == id && c.User.Id == GetUserId());
+                
+                Note Note = await _context.Notes.FirstAsync(c => c.Id == id && (c.User.Id == GetUserId() || UserRole.Equals("Admin")));
 
                 if (Note != null)
                 {
@@ -123,36 +125,22 @@ namespace AnimalAPI.Services.NoteService
         {
             ServiceResponse<GetNoteDto> serviceResponse = new ServiceResponse<GetNoteDto>();
 
+            string UserRole = GetUserRole();
+
             try
             {
                 Note note = await _context.Notes.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedNote.Id);
 
-                Note mappedUpdated = _mapper.Map<Note>(updatedNote);
-
-                switch (updatedNote.NoteType)
+                if (note.User.Id == GetUserId() || UserRole.Equals("Admin"))
                 {
-                    case NoteType.BreedingRecord:
-                        mappedUpdated.BreedingRecordId = updatedNote.ReferenceId;
-                        break;
-                    case NoteType.Contact:
-                        mappedUpdated.ContactId = updatedNote.ReferenceId;
-                        break;
-                    default:
-                        break;
-                }
+                    note.Medical = updatedNote.Medical;
+                    note.Title = updatedNote.Title;
+                    note.Body = updatedNote.Body;
 
-                mappedUpdated.Edited = DateTime.Now;
-
-                if (note.User.Id == GetUserId())
-                {
-                    note = Utility.Util.CloneJson<Note>(mappedUpdated);
-
+                    note.Edited = DateTime.Now;
 
                     _context.Notes.Update(note);
-
                     await _context.SaveChangesAsync();
-
-
                     serviceResponse.Data = _mapper.Map<GetNoteDto>(note);
                 }
                 else
