@@ -59,6 +59,10 @@ namespace AnimalAPI.Services.BreedingRecordService
             BreedingRecord record = _mapper.Map<BreedingRecord>(newBreedingRecord);
             record.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
 
+            record.Owner = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == newBreedingRecord.OwnerId);
+            record.Breeder = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == newBreedingRecord.BreederId);
+            record.BirthLitter = await _context.Litters.FirstOrDefaultAsync(c => c.Id == newBreedingRecord.BirthLitterId);
+
             await _context.BreedingRecords.AddAsync(record);
             await _context.SaveChangesAsync();
 

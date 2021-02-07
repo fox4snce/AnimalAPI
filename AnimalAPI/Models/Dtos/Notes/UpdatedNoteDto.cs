@@ -9,10 +9,11 @@ namespace AnimalAPI.Models.Dtos.Notes
     public class UpdatedNoteDto
     {
         public int Id { get; set; }
-        public int ReferenceId { get; set; }
-        public NoteType NoteType { get; set; }
         public bool Medical { get; set; } = false;
         public string Title { get; set; }
         public string Body { get; set; }
+
+        public int? BreedingRecordId { get; set; }
+        public int? ContactId { get; set; }
     }
 }
