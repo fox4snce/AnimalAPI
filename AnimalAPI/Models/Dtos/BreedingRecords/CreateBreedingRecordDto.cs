@@ -15,7 +15,7 @@ namespace AnimalAPI.Models.Dtos.BreedingRecords
         public bool Public { get; set; } = false;
         public int BirthLitterId { get; set; }
         public DateTime Birthday { get; set; }
-        public Gender Sex { get; set; }
+        public int Sex { get; set; }
         public int BreederId { get; set; }
         public DateTime DateOfAcquisition { get; set; }
         

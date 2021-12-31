@@ -7,7 +7,7 @@ namespace AnimalAPI.Models.Breeding
 {
     public enum Gender
     {
-        Female = 1,
-        Male = 2
+        Female = 2,
+        Male = 1
     }
 }

@@ -12,7 +12,7 @@ namespace AnimalAPI.Models.Dtos.Litters
         public bool Public { get; set; } = false;
         public DateTime DateOfBirth { get; set; }
         public DateTime DateOfAcquisition { get; set; }
-        public Contact Breeder { get; set; }
+        public int BreederId { get; set; }
         
     }
 }

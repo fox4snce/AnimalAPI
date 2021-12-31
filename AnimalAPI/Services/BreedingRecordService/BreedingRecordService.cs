@@ -62,6 +62,8 @@ namespace AnimalAPI.Services.BreedingRecordService
             record.Owner = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == newBreedingRecord.OwnerId);
             record.Breeder = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == newBreedingRecord.BreederId);
             record.BirthLitter = await _context.Litters.FirstOrDefaultAsync(c => c.Id == newBreedingRecord.BirthLitterId);
+            record.Sex = newBreedingRecord.Sex == 1 ? record.Sex = Gender.Male : record.Sex = Gender.Female;
+            
 
             await _context.BreedingRecords.AddAsync(record);
             await _context.SaveChangesAsync();
@@ -114,17 +116,25 @@ namespace AnimalAPI.Services.BreedingRecordService
             {
                 BreedingRecord breedingRecord = await _context.BreedingRecords.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedBreedingRecord.Id);
 
-                BreedingRecord mappedUpdated = _mapper.Map<BreedingRecord>(updatedBreedingRecord);
+                //BreedingRecord mappedUpdated = _mapper.Map<BreedingRecord>(updatedBreedingRecord);
 
                 if (breedingRecord.User.Id == GetUserId())
                 {
-                    breedingRecord = Utility.Util.CloneJson<BreedingRecord>(mappedUpdated);
+                    //breedingRecord = Utility.Util.CloneJson<BreedingRecord>(mappedUpdated);
 
+                    breedingRecord.Name = updatedBreedingRecord.Name;
+                    breedingRecord.Owner = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == updatedBreedingRecord.OwnerId);
+                    breedingRecord.Breeder = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == updatedBreedingRecord.BreederId);
                     
+                    breedingRecord.BirthLitter = await _context.Litters.FirstOrDefaultAsync(c => c.Id == updatedBreedingRecord.BirthLitterId);
+                    breedingRecord.Sex = updatedBreedingRecord.Sex == 1 ? Gender.Male : Gender.Female;
+                    breedingRecord.Public = updatedBreedingRecord.Public;
+                    breedingRecord.Birthday = updatedBreedingRecord.Birthday;
+                    breedingRecord.DateOfAcquisition = updatedBreedingRecord.DateOfAcquisition;
+
                     _context.BreedingRecords.Update(breedingRecord);
                     
                     await _context.SaveChangesAsync();
-                   
 
                     serviceResponse.Data = _mapper.Map<GetBreedingRecordDto>(breedingRecord);
                 }

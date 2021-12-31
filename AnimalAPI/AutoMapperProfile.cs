@@ -32,6 +32,7 @@ namespace AnimalAPI
             CreateMap<Contact, GetContactDto>();
             CreateMap<CreateContactDto, Contact>();
             CreateMap<UpdatedContactDto, Contact>();
+            CreateMap<GetContactDto, Contact>();
 
             
 

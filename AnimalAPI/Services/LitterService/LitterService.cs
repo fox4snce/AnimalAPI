@@ -36,10 +36,12 @@ namespace AnimalAPI.Services.LitterService
 
             List<Litter> records = UserRole.Equals("Admin") ?
                 await _context.Litters
+                .Include(lit => lit.Breeder)
                 .Include(lit => lit.Parents).ThenInclude(parents => parents.Parent)
                 .Include(lit => lit.Siblings).ThenInclude(sibling => sibling.Sibling)
                 .ToListAsync() :
                 await _context.Litters
+                .Include(lit => lit.Breeder)
                 .Include(lit => lit.Parents).ThenInclude(parents => parents.Parent)
                 .Include(lit => lit.Siblings).ThenInclude(sibling => sibling.Sibling)
                 .Where(c => c.User.Id == GetUserId()).ToListAsync();
@@ -52,6 +54,7 @@ namespace AnimalAPI.Services.LitterService
             ServiceResponse<List<GetLitterDto>> serviceResponse = new ServiceResponse<List<GetLitterDto>>();
             Litter record = _mapper.Map<Litter>(newLitter);
             record.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+            record.Breeder = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == newLitter.BreederId);
 
             await _context.Litters.AddAsync(record);
             await _context.SaveChangesAsync();
@@ -75,13 +78,6 @@ namespace AnimalAPI.Services.LitterService
                     await _context.SaveChangesAsync();
                     serviceResponse.Data = await GetAllRecords();
 
-
-                    //_context.Litters
-                    //.Include(lit => lit.Parents).ThenInclude(parents => parents.Parent)
-                    //.Include(lit => lit.Siblings).ThenInclude(sibling => sibling.Sibling)
-                    //.Where(c => c.User.Id == GetUserId())
-                    //.Select(c => _mapper.Map<GetLitterDto>(c))
-                    //.ToList();
                 }
                 else
                 {

@@ -34,7 +34,7 @@ namespace AnimalAPI.Services.ContactService
         {
             ServiceResponse<List<GetContactDto>> serviceResponse = new ServiceResponse<List<GetContactDto>>();
             Contact record = _mapper.Map<Contact>(newContact);
-            record.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+            record.UserId = GetUserId();// = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
 
             await _context.Contacts.AddAsync(record);
             await _context.SaveChangesAsync();
@@ -50,13 +50,13 @@ namespace AnimalAPI.Services.ContactService
 
             try
             {
-                Contact Contact = await _context.Contacts.FirstAsync(c => c.Id == id && c.User.Id == GetUserId());
+                Contact Contact = await _context.Contacts.FirstAsync(c => c.Id == id && c.UserId == GetUserId());
 
                 if (Contact != null)
                 {
                     _context.Contacts.Remove(Contact);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = _context.Contacts.Where(c => c.User.Id == GetUserId()).Select(c => _mapper.Map<GetContactDto>(c)).ToList();
+                    serviceResponse.Data = _context.Contacts.Where(c => c.UserId == GetUserId()).Select(c => _mapper.Map<GetContactDto>(c)).ToList();
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace AnimalAPI.Services.ContactService
                 await _context.Contacts
                 .FirstOrDefaultAsync(c => c.Id == id) :
             await _context.Contacts
-                .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == GetUserId());
 
             serviceResponse.Data = _mapper.Map<GetContactDto>(record);
             return serviceResponse;
@@ -102,11 +102,12 @@ namespace AnimalAPI.Services.ContactService
 
             try
             {
-                Contact contact = await _context.Contacts.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedContact.Id);
+                //Contact contact = await _context.Contacts.Include(c => c.User).AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedContact.Id);
+                Contact contact = await _context.Contacts.AsNoTracking().FirstOrDefaultAsync(c => c.Id == updatedContact.Id);
 
                 Contact mappedUpdated = _mapper.Map<Contact>(updatedContact);
 
-                if (contact.User.Id == GetUserId())
+                if (contact.UserId == GetUserId())
                 {
 
                     contact.FirstName = (updatedContact.FirstName != null) ? updatedContact.FirstName : contact.FirstName;
@@ -155,7 +156,7 @@ namespace AnimalAPI.Services.ContactService
                 .ToListAsync() :
                 await _context.Contacts
                 .Include(br => br.Notes)
-                .Where(c => c.User.Id == GetUserId()).ToListAsync();
+                .Where(c => c.UserId == GetUserId()).ToListAsync();
 
             return records.Select(c => _mapper.Map<GetContactDto>(c)).ToList();
         }

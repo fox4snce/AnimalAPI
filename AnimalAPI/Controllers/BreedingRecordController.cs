@@ -42,6 +42,9 @@ namespace AnimalAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateBreedingRecord(UpdatedBreedingRecordDto updatedBreedingRecord)
         {
+            return Ok(await _breedingRecordService.UpdateBreedingRecord(updatedBreedingRecord));
+
+            /*
             ServiceResponse<GetBreedingRecordDto> response = await _breedingRecordService.UpdateBreedingRecord(updatedBreedingRecord);
 
             if (response.Data == null)
@@ -52,7 +55,7 @@ namespace AnimalAPI.Controllers
             {
                 return Ok(response);
             }
-
+            */
         }
 
         [HttpDelete("{id}")]

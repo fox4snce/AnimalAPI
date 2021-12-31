@@ -10,20 +10,14 @@ namespace AnimalAPI.Models.Dtos.BreedingRecords
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public Contact Owner { get; set; }
+        public int OwnerId { get; set; }
         public bool Public { get; set; } = false;
-
         public int BirthLitterId { get; set; }
-
         public DateTime Birthday { get; set; }
-
-
-        public Gender Sex { get; set; }
-
-
-        public Contact Breeder { get; set; }
+        public int Sex { get; set; }
+        public int BreederId { get; set; }
         public DateTime DateOfAcquisition { get; set; }
-        
+
 
     }
 }

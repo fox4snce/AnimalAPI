@@ -9,7 +9,9 @@ namespace AnimalAPI.Models.Breeding
     public class Contact
     {
         public int Id { get; set; }
-        public User User { get; set; }
+
+        //public User User { get; set; }
+        public int UserId { get; set; }
         public bool Public { get; set; } = false;
         public string FirstName { get; set; }
         public string LastName { get; set; }
