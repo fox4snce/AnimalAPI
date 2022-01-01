@@ -14,9 +14,9 @@ namespace AnimalAPI.Models.Dtos.Notes
         public bool Medical { get; set; } = false;
         public string Title { get; set; }
         public string Body { get; set; }
-        public NoteType NoteType { get; set; }
+        public int? BreedingRecordId { get; set; } = null;
+        public int? ContactId { get; set; } = null;
 
-        public int ReferenceId { get; set; }
         
     }
 }

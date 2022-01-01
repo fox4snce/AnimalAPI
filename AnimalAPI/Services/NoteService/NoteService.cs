@@ -43,20 +43,13 @@ namespace AnimalAPI.Services.NoteService
 
             // Set the note's user based on Id
             note.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
-            
-            // Which type of note is it?
-            switch (newNote.NoteType)
-            {
-                case NoteType.BreedingRecord:
-                    note.BreedingRecordId = newNote.ReferenceId;
-                    break;
-                case NoteType.Contact:
-                    note.ContactId = newNote.ReferenceId;
-                    break;
-                default:
-                    break;
-            }
-            
+
+            note.BreedingRecordId = newNote.BreedingRecordId;
+            note.ContactId = newNote.ContactId;
+
+            note.Title = newNote.Title;
+            note.Body = newNote.Body;
+
             // Save
             await _context.Notes.AddAsync(note);
             await _context.SaveChangesAsync();
@@ -66,6 +59,8 @@ namespace AnimalAPI.Services.NoteService
 
             return serviceResponse;
         }
+
+        
 
         public async Task<ServiceResponse<List<GetNoteDto>>> DeleteNote(int id)
         {
